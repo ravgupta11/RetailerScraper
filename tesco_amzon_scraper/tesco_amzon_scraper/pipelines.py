@@ -9,10 +9,11 @@
 import os
 
 from scrapy import Request
+from scrapy import signals
 from scrapy.exporters import CsvItemExporter
 from scrapy.exporters import JsonItemExporter
 from scrapy.pipelines.images import ImagesPipeline
-
+from scrapy.xlib.pydispatch import dispatcher
 
 
 class TescoAmzonScraperPipeline1(ImagesPipeline):
@@ -50,6 +51,9 @@ class TescoAmzonScraperPipeline1(ImagesPipeline):
 
 class TescoAmzonScraperPipeline2(object):
 
+    def __init__(self):
+        dispatcher.connect(self.close_spider, signals.spider_closed)
+
     def cleanPrice(self, item, spider):
         if type(item['price']) == list:
             item['price'] = item['price'][0]
@@ -59,7 +63,7 @@ class TescoAmzonScraperPipeline2(object):
             item['title'] = item['title'][0]
 
         if spider.site == 'amazon':
-            item['title'] = item['title'].replace(':', ' ').replace(',', '').replace(' ', '_').replace('Amazon.com', '')
+            item['title'] = item['title'].replace(':', ' ').replace(',', '').replace('Amazon.com', '').strip()
 
     def cleanProduct(self, item, spider):
         if type(item['product_desc']) == list:
