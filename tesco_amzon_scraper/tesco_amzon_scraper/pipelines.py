@@ -9,11 +9,9 @@
 import os
 
 from scrapy import Request
-from scrapy import signals
 from scrapy.exporters import CsvItemExporter
 from scrapy.exporters import JsonItemExporter
 from scrapy.pipelines.images import ImagesPipeline
-from scrapy.xlib.pydispatch import dispatcher
 
 
 class TescoAmzonScraperPipeline1(ImagesPipeline):
@@ -22,7 +20,7 @@ class TescoAmzonScraperPipeline1(ImagesPipeline):
                 item.get(self.images_urls_field, [])]
 
     def file_path(self, request, response=None, info=None):
-        ## start of deprecation warning block (can be removed in the future)
+
         def _warn():
             from scrapy.exceptions import ScrapyDeprecationWarning
             import warnings
@@ -45,31 +43,27 @@ class TescoAmzonScraperPipeline1(ImagesPipeline):
             _warn()
             return self.image_key(url)
         ## end of deprecation warning block
-        title = request.meta['title']
+        _title = request.meta['title']
         _path = request.meta['breadcrumbs']
-        return '%s/%s/IMG.jpg' % (_path, title)
+        return '%s\%s\IMG.jpg' % (_path, _title)
 
 class TescoAmzonScraperPipeline2(object):
 
-    def __init__(self):
-        dispatcher.connect(self.close_spider, signals.spider_closed)
 
-    def cleanPrice(self, item, spider):
+    def cleanPrice(self, item):
         if type(item['price']) == list:
             item['price'] = item['price'][0]
 
-    def cleanTitle(self, item, spider):
+    def cleanTitle(self, item):
         if type(item['title']) == list:
             item['title'] = item['title'][0]
-
-        if spider.site == 'amazon':
             item['title'] = item['title'].replace(':', ' ').replace(',', '').replace('Amazon.com', '').strip()
 
-    def cleanProduct(self, item, spider):
+    def cleanProduct(self, item):
         if type(item['product_desc']) == list:
             item['product_desc'] = item['product_desc'][0]
 
-    def cleanBreadcrumbs(self, item, spider):
+    def cleanBreadcrumbs(self, item):
         item['breadcrumbs'] = [x.strip(' \n') for x in item['breadcrumbs']]
         item['breadcrumbs'] = '/'.join(item['breadcrumbs'])
 
@@ -83,36 +77,35 @@ class TescoAmzonScraperPipeline2(object):
 
 
     def _exporter_for_item(self, item, spider):
-        self.cleanTitle(item, spider)
-        title = item['title']
+        self.cleanTitle(item)
+        _title = item['title']
         _path = ""
         try:
             _path = item['breadcrumbs']
         except:
             pass
-
-        if (title, _path) not in self.title_to_exporter:
-            PATH = 'FILES/' + _path + '/' + title
+        if (_title, _path) not in self.title_to_exporter:
+            PATH = 'FILES\\' + _path + '\\' + _title
             if not os.path.exists(PATH):
                 os.makedirs(PATH)
             if (spider.output == 'json'):
-                f = open('%s/JS.json' % (PATH), 'wb')
+                f = open('%s\JS.json' % (PATH), 'wb')
                 exporter = JsonItemExporter(f)
             else:
-                f = open('%s/CSV.csv' % (PATH), 'wb')
+                f = open('%s\CSV.csv' % (PATH), 'wb')
                 exporter = CsvItemExporter(f)
             exporter.start_exporting()
-            self.title_to_exporter[(title, _path)] = exporter
-        return self.title_to_exporter[(title, _path)]
+            self.title_to_exporter[(_title, _path)] = exporter
+        return self.title_to_exporter[(_title, _path)]
 
 
 
     def process_item(self, item, spider):
         try:
-            self.cleanBreadcrumbs(item, spider)
-            self.cleanTitle(item, spider)
-            self.cleanPrice(item, spider)
-            self.cleanProduct(item, spider)
+            self.cleanBreadcrumbs(item)
+            self.cleanTitle(item)
+            self.cleanPrice(item)
+            self.cleanProduct(item)
         except KeyError:
             pass
         exporter = self._exporter_for_item(item, spider)
