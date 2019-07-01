@@ -61,8 +61,8 @@ For running a unit test on a specific product page example.
 
 The new retailer site must not be build with JavaScript. Files ```RetailerDetails.py```, ```constants.py```, ```RetailerSpider.py``` needs to be modified for using the scraper.
 
-* In ```constants.py``` define a enum class for the new retailer domain.
-* Each Enum class must have a new constant of ```[SITE_NAME]``` and constant value for the specific site (Domain URL, Xpath Queries and Product page regex are used as constant's values).
+* In ```constants.py``` redefine enums for the new retailer domain.
+* Each new enums must have a new constant of ```[SITE_NAME]``` and constant value for the specific site (Domain URL, Xpath Queries and Product page regex are used as constant's values).
 * In ```RetailerDetails.py``` define a class ```[SITE_NAME]Details``` extending interface ```Details```(replace [SITE_NAME] with name of the retailer).
 * Define all functions of the ```Details``` interface in the new class.
 * Use the function ```applyrespone(response_object, xpath_query_expression)``` in ```utilities.py``` returns a object that contains data of your xpath query.
