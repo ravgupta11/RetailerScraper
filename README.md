@@ -1,4 +1,4 @@
-# Tesco_Amazon_Scraper
+# RetailerScraper
 
 This project is concerned with automated retrieval of product information from retailer sites like amazon.com, tesco.com, asda.com, etc. The data retrieved can be used to train many machine learning algorithms like pricing approximation, image recognition etc. This project follows an object oriented approach in Python which gives it a bit generic functionality. 
 
