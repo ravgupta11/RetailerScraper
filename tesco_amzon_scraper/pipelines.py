@@ -3,6 +3,7 @@ from scrapy import Request
 from scrapy.exporters import CsvItemExporter
 from scrapy.exporters import JsonItemExporter
 from scrapy.pipelines.images import ImagesPipeline
+from scrapy.exceptions import DropItem
 from tesco_amzon_scraper.utilities import cleanTitle, to_str, cleanBreadcrumbs
 
 class TescoAmzonScraperPipeline1(ImagesPipeline):
@@ -82,7 +83,7 @@ class TescoAmzonScraperPipeline2(object):
             item['price'] = to_str(item['price']).strip('\n').strip()
             item['product_desc'] = to_str(item['product_desc'])
         except KeyError:
-            pass
+            raise DropItem()
         exporter = self._exporter_for_item(item, spider)
         exporter.export_item(item)
         return item
