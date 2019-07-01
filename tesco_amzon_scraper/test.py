@@ -1,6 +1,6 @@
 import unittest, os
 from scrapy.http import TextResponse, Request
-from tesco_amzon_scraper.utilities import applyResponse, to_str
+from utilities import applyResponse, to_str
 
 def fake_response_from_file(file_name, url):
 
