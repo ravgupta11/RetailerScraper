@@ -1,6 +1,6 @@
 # Tesco_Amazon_Scraper
 
-This project is concerned with automated retrieval of product information from retailer sites like amazon.com, tesco.com, asda.com, etc. The data retrieved can be used to train many machine learning algorithms like pricing approximation, image recognition etc. This project follows an object oriented approach in Python. 
+This project is concerned with automated retrieval of product information from retailer sites like amazon.com, tesco.com, asda.com, etc. The data retrieved can be used to train many machine learning algorithms like pricing approximation, image recognition etc. This project follows an object oriented approach in Python which gives it a bit generic functionality. 
 
 ## Getting Started
 
@@ -57,3 +57,14 @@ For running a unit test on a specific product page example.
 * Open ```test.py``` and change the actual parameters of fake_response_from_file function with your own file name and url.
 * Open test.py directory in Terminal/command prompt and type python -m unittest
 
+## Modifying the project to scrape a new retailer domain
+
+The new retailer site must not be build with JavaScript. Files ```RetailerDetails.py```, ```constants.py```, ```RetailerSpider.py``` needs to be modified for using the scraper.
+
+* In ```constants.py``` define a enum class for the new retailer domain.
+* Each Enum class must have a new constant of ```[SITE_NAME]``` and constant value for the specific site (Domain URL, Xpath Queries and Product page regex are used as constant's values).
+* In ```RetailerDetails.py``` define a class ```[SITE_NAME]Details``` extending interface ```Details```(replace [SITE_NAME] with name of the retailer).
+* Define all functions of the ```Details``` interface in the new class.
+* Use the function ```applyrespone(response_object, xpath_query_expression)``` in ```utilities.py``` returns a object that contains data of your xpath query.
+* In ```RetailerSpider.py``` ammend ```makeObject(spider)``` function to check for equality of ```spider.site == [SITE_NAME] ``` and return an object of ```[SITE_NAME]Details``` class after importing it from ```RetailerDetails```.
+* Run the command for running the ```RetailerSpider.py``` spider but with ```-a site=[SITE_NAME] ``` argument.
