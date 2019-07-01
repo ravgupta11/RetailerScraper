@@ -42,7 +42,7 @@ or
 scrapy crawl RetailerSpider -a output=csv -a site=amazon -s LOG_ENABLED=False
 ```
 * Its recommended to have ```-s LOG_ENABLED=False``` as it significantly speeds up scraping process.
-* Generally we don't want to scrape the whole amazon database so its recommended to add ```-s DEPTH_LIMIT=1``` or ```-s DEPTH_LIMIT=2 ``` etc depending upon how many products you require. More the products more are the chancing of the ip being blocked by amazon.
+* Generally we don't want to scrape the whole amazon database so its recommended to add ```-s DEPTH_LIMIT=1``` or ```-s DEPTH_LIMIT=2 ``` etc depending upon how many products you require. More the products more are the chances of the ip being blocked by amazon.
 
 * Use Ctrl + c keyboard shortcut to have a graceful shut-down of the process (It will take some time to closs all the files after using the shortcut).
 
