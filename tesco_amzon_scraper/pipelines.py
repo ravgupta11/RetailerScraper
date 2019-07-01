@@ -79,7 +79,7 @@ class TescoAmzonScraperPipeline2(object):
         try:
             item['breadcrumbs'] = cleanBreadcrumbs(item['breadcrumbs'])
             item['title'] = cleanTitle(item['title'])
-            item['price'] = to_str(item['price'])
+            item['price'] = to_str(item['price']).strip('\n').strip()
             item['product_desc'] = to_str(item['product_desc'])
         except KeyError:
             pass
