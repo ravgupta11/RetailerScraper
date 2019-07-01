@@ -11,13 +11,13 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them
 
 ```
-[Python 3.x Interpreter](https://www.python.org/downloads/)
-[Scrapy Package library](https://pypi.org/project/Scrapy/)
-[Pillow Package library](https://pypi.org/project/Pillow/2.2.1/)
-Unittest Package library : Python standard library
-os Package library : Python standard library
-[interface-python Package Library](https://pypi.org/project/python-interface/)
-enum Package library: Python standard library
+Python 3.x Interpreter (https://www.python.org/downloads/)
+Scrapy Package library (https://pypi.org/project/Scrapy/)
+Pillow Package library https://pypi.org/project/Pillow/2.2.1/)
+Unittest Package library (Python standard library)
+os Package library (Python standard library)
+interface-python Package Library (https://pypi.org/project/python-interface/)
+enum Package library (Python standard library)
 ```
 
 ### Installing
