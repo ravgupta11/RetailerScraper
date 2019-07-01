@@ -72,3 +72,6 @@ The new retailer site must not be build with JavaScript. Files ```RetailerDetail
 ## Buit with
 
 Scrapy API A web framework for Information retrieval.
+
+# Author
+Raveesh Gupta
