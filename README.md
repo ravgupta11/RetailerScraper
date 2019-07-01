@@ -68,3 +68,7 @@ The new retailer site must not be build with JavaScript. Files ```RetailerDetail
 * Use the function ```applyrespone(response_object, xpath_query_expression)``` in ```utilities.py``` returns a object that contains data of your xpath query.
 * In ```RetailerSpider.py``` ammend ```makeObject(spider)``` function to check for equality of ```spider.site == [SITE_NAME] ``` and return an object of ```[SITE_NAME]Details``` class after importing it from ```RetailerDetails```.
 * Run the command for running the ```RetailerSpider.py``` spider but with ```-a site=[SITE_NAME] ``` argument.
+
+## Buit with
+
+Scrapy API A web framework for Information retrieval.
